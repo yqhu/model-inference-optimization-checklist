@@ -2,7 +2,7 @@
 
 This checklist describes some steps that should be completed when diagnosing model inference performance issues.  Some of these suggestions are only applicable to NLP models (e.g., ensuring the input is not over-padded and sequence bucketing), but the general principles are useful for other models too.
 
-* Check the versions of PyTorch, Nvidia driver, and other components and update to the latest compatible releases.  Oftentimes known performance bugs have already been fixed.  As the colab examples show, the inference time of a Hugging Face bert model reduces by 15% moving from PyTorch 1.1 and Transformers 3.3 to PyTorch 1.9 and Transformers 4.6.
+* Check the versions of PyTorch, Nvidia driver, and other components and update to the latest compatible releases.  Oftentimes known performance bugs have already been fixed.  As this example ([using PyTorch 1.1](examples/torch_version_11.py), [using PyTorch 1.9](examples/torch_version_19.py)) shows, the inference time of a Hugging Face bert model reduces by 15% moving from PyTorch 1.1 and Transformers 3.3 to PyTorch 1.9 and Transformers 4.6.
 
 * Collect system-level activity logs to understand the overall resource utilizations. It’s useful to know how the model inference pipeline is using the system resources at a high level, as the first step of optimization.  Even simple CLI tools such as nvidia-smi and htop would be helpful.
 
@@ -14,7 +14,7 @@ This checklist describes some steps that should be completed when diagnosing mod
 
 * Model inference on input sequences of dynamic length (e.g., transformers for NLP): make sure the tokenizer is not over-padding the input.  If a transformer was trained with padding to a constant length (e.g., 512) and deployed with the same padding, it would run unnecessarily slow (orders of magnitude) on short sequences.
 
-* Vision models with input in JPEG format often benefit from faster JPEG decoding on CPU such as libjpeg-turbo and Pillow-SIMD, and on GPU such as torchvision.io.decode_jpeg and Nvidia DALI.  As this example shows, Nvidia DALI is about 20% faster than torchvision, even on an old K80 GPU.
+* Vision models with input in JPEG format often benefit from faster JPEG decoding on CPU such as libjpeg-turbo and Pillow-SIMD, and on GPU such as torchvision.io.decode_jpeg and Nvidia DALI.  As [this example](examples/torchvision_vs_dali.py) shows, Nvidia DALI is about 20% faster than torchvision, even on an old K80 GPU.
 
 * Start model inference optimization only after other factors, the “low-hanging fruit”, have been extensively evaluated and addressed.
 
