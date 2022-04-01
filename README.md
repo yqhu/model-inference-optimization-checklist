@@ -1,4 +1,4 @@
-# Model Inference Optimization Checklist
+# (Draft) Model Inference Optimization Checklist
 
 This checklist describes some steps that should be completed when diagnosing model inference performance issues.  Some of these suggestions are only applicable to NLP models (e.g., ensuring the input is not over-padded and sequence bucketing), but the general principles are useful for other models too.
 
